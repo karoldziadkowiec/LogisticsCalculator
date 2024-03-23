@@ -3,9 +3,9 @@ import './App.css';
 
 const Footer = () => {
     return (
-        <footer className="border-top footer bg-dark" style={{ color: 'white', position: 'fixed', bottom: 0, width: '100%', zIndex: 100 }}>
+        <footer className="border-top fixed-bottom footer bg-dark text-center text-white">
             <div className="container py-3">
-                <center>&copy; 2024 - LogisticsCalculator</center>
+                &copy; 2024 - LogisticsCalculator
             </div>
         </footer>
     );
