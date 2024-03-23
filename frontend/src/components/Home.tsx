@@ -19,7 +19,7 @@ const Home = () => {
   };
 
   const moveToMediatorPage = () => {
-    navigate('/medaitor');
+    navigate('/mediator');
   };
 
   return (
