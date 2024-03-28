@@ -1,6 +1,5 @@
 package com.LogisticsCalculator.LogisticsCalculator.Controllers;
 
-import com.LogisticsCalculator.LogisticsCalculator.Interfaces.ITaskRepository;
 import com.LogisticsCalculator.LogisticsCalculator.Models.Task;
 import com.LogisticsCalculator.LogisticsCalculator.Repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;

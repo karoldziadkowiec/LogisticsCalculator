@@ -15,7 +15,7 @@ const AppNavbar = () => {
               <Nav className="me-auto">
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
                 <Nav.Link as={Link} to="/cpm">CPM</Nav.Link>
-                <Nav.Link as={Link} to="/mediator">Mediator issue</Nav.Link>
+                <Nav.Link as={Link} to="/middleman">Middleman issue</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

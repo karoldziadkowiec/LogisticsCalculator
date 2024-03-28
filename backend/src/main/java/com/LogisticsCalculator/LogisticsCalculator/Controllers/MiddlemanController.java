@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mediator")
-public class MediatorController {
+@RequestMapping("/middleman")
+public class MiddlemanController {
     //private final TaskRepository taskRepository;
 
     @Autowired
-    public MediatorController() {
+    public MiddlemanController() {
 
     }
     @GetMapping()
-    public int callMediator(){
+    public int callMiddleman(){
         return 2;
     }
 

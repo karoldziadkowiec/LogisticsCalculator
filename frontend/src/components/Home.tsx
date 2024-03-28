@@ -18,8 +18,8 @@ const Home = () => {
     navigate('/cpm');
   };
 
-  const moveToMediatorPage = () => {
-    navigate('/mediator');
+  const moveToMiddlemanPage = () => {
+    navigate('/middleman');
   };
 
   return (
@@ -27,13 +27,13 @@ const Home = () => {
       <div className="links">
         <RouterLink onClick={() => handleLinkClick("cpm")} to="#" className="link" style={{ cursor: "pointer" }}>CPM</RouterLink>
         <div className="sign"> | </div>
-        <RouterLink onClick={() => handleLinkClick("mediator")} to="#" className="link" style={{ cursor: "pointer" }}>Mediator issue</RouterLink>
+        <RouterLink onClick={() => handleLinkClick("middleman")} to="#" className="link" style={{ cursor: "pointer" }}>Middleman issue</RouterLink>
       </div>
       <Element name="home" className="startSection">
         <h1><span className="logisticsCalculator">LogisticsCalculator</span></h1>
         <img src={require('../img/logo.png')} alt="logo" className="logo" />
         <h2>Your one-stop solution for efficient path planning and optimization. </h2>
-        <h4>With our algorithms, we streamline your logistics operations by calculating CPM and Mediator methods with precision and speed.</h4>
+        <h4>With our algorithms, we streamline your logistics operations by calculating CPM and Middleman methods with precision and speed.</h4>
       </Element>
       <Element name="cpm" className="blackSection">
         <h1>CPM</h1>
@@ -42,12 +42,12 @@ const Home = () => {
         <p></p>
         <Button variant="danger" onClick={moveToCPMPage}>Solve CPM issue</Button>
       </Element>
-      <Element name="mediator" className="whiteSection">
-        <h1>Mediator issue</h1>
-        <h5>The Mediator Method is a strategic approach in logistics management that optimizes routes by considering intermediary points.</h5>
+      <Element name="middleman" className="whiteSection">
+        <h1>Middleman issue</h1>
+        <h5>The Middleman Method is a strategic approach in logistics management that optimizes routes by considering intermediary points.</h5>
         <h5>Effectively minimizes transportation distances, reduces costs and increases overall logistics efficiency.</h5>
         <p></p>
-        <Button variant="danger" onClick={moveToMediatorPage}>Solve Mediator issue</Button>
+        <Button variant="danger" onClick={moveToMiddlemanPage}>Solve Middleman issue</Button>
       </Element>
     </div>
   );
