@@ -6,7 +6,7 @@ const CPM = () => {
 
     return (
         <div className="CPM">
-            <h1>CPM issue</h1>
+            <h1>CPM issues</h1>
         </div>
 
         
