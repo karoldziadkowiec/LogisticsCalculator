@@ -1,6 +1,6 @@
 import React from 'react';
-import '../App.css';
-import '../styles/CPM.css';
+import '../../App.css';
+import '../../styles/CPM.css';
 
 const CPM = () => {
 
@@ -8,6 +8,8 @@ const CPM = () => {
         <div className="CPM">
             <h1>CPM issue</h1>
         </div>
+
+        
     );
 }
 

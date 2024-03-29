@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import Home from './components/Home';
-import CPM from './components/CPM';
-import Middleman from './components/Middleman';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import Home from './components/home/Home';
+import CPM from './components/cpm/CPM';
+import Middleman from './components/middleman/Middleman';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {

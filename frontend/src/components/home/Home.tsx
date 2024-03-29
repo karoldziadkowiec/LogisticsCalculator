@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as RouterLink, useNavigate  } from 'react-router-dom';
 import { Element, scroller } from 'react-scroll';
 import { Button } from 'react-bootstrap';
-import '../styles/Home.css';
+import '../../styles/Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const Home = () => {
       </div>
       <Element name="home" className="startSection">
         <h1><span className="logisticsCalculator">LogisticsCalculator</span></h1>
-        <img src={require('../img/logo.png')} alt="logo" className="logo" />
+        <img src={require('../../img/logo.png')} alt="logo" className="logo" />
         <h2>Your one-stop solution for efficient path planning and optimization. </h2>
         <h4>With our algorithms, we streamline your logistics operations by calculating CPM and Middleman methods with precision and speed.</h4>
       </Element>

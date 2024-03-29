@@ -1,6 +1,6 @@
 import React from 'react';
-import '../App.css';
-import '../styles/Middleman.css';
+import '../../App.css';
+import '../../styles/Middleman.css';
 
 const Middleman = () => {
 
@@ -8,6 +8,7 @@ const Middleman = () => {
         <div className="Middleman">
             <h1>Middleman issue</h1>
         </div>
+        
         
     );
 }
