@@ -1,4 +1,8 @@
 package com.LogisticsCalculator.LogisticsCalculator.Main;
+import com.LogisticsCalculator.LogisticsCalculator.Models.Activity;
+import com.LogisticsCalculator.LogisticsCalculator.Services.CPM.GraphDesigner;
+import com.LogisticsCalculator.LogisticsCalculator.Services.CPM.InputHandler;
+
 import java.util.Scanner;
 
 public class Main
@@ -13,9 +17,9 @@ public class Main
 
         GraphDesigner graphDesigner = new GraphDesigner();
         graphDesigner.designGraph();
-
         graphDesigner.moveForward();
         graphDesigner.moveBack();
+
         Activity.identifyCriticalActivities();
         Activity.printTable();
         graphDesigner.createCritialPath();

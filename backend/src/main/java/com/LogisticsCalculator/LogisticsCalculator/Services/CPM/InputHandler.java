@@ -1,4 +1,6 @@
-package com.LogisticsCalculator.LogisticsCalculator.Main;
+package com.LogisticsCalculator.LogisticsCalculator.Services.CPM;
+import com.LogisticsCalculator.LogisticsCalculator.Models.Activity;
+
 import java.util.*;
 
 public class InputHandler

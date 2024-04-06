@@ -1,24 +1,24 @@
-package com.LogisticsCalculator.LogisticsCalculator.Main;
+package com.LogisticsCalculator.LogisticsCalculator.Models;
 import java.util.ArrayList;
 import java.util.*;
 
 public class Activity
 {
-    int id;
-    String name;
-    List<String> dependencyNames;
-    int duration;
-    int earlyStart;
-    int earlyFinish;
-    int lateStart;
-    int lateFinish;
-    int slackTime;
-    String isCriticalActivity;
-    boolean isChecked;
+    public int id;
+    public String name;
+    public List<String> dependencyNames;
+    public int duration;
+    public int earlyStart;
+    public int earlyFinish;
+    public int lateStart;
+    public int lateFinish;
+    public int slackTime;
+    public String isCriticalActivity;
+    public boolean isChecked;
 
-    List<Activity> childList;
-    List<Activity> parentList;
-    static List<Activity> activitiesContainer = new ArrayList<Activity>();
+    public List<Activity> childList;
+    public List<Activity> parentList;
+    public static List<Activity> activitiesContainer = new ArrayList<Activity>();
     public Activity (int id, String name, List<String> dependencies, int duration)
     {
         this.id = id;

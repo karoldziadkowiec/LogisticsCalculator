@@ -42,7 +42,7 @@ const CPM = () => {
         setDependencyValues(newDependencies);
     };
 
-    const handleCalculateTable = () => {
+    const handleGenerateTable = () => {
         moveToCPMTablePage();
     }
 
@@ -113,7 +113,7 @@ const CPM = () => {
                         {generateTable()}
                     </tbody>
                 </table>
-                <Button variant="danger" onClick={handleCalculateTable}>Calculate</Button>
+                <Button variant="danger" onClick={handleGenerateTable}>Generate Table</Button>
             </div>
         </div>
     );
