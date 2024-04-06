@@ -1,15 +1,15 @@
 package com.LogisticsCalculator.LogisticsCalculator.Main;
 import java.util.Scanner;
 
-public class Final extends Throwable
+public class Main
 {
     public static void main(String[] args)
     {
         System.out.println("Enter the number of activities:");
         Scanner scanner = new Scanner(System.in);
 
-        InputHandler takeInput = new InputHandler(scanner.nextInt());
-        takeInput.enterNodeDetails();
+        InputHandler inputHandler = new InputHandler(scanner.nextInt());
+        inputHandler.enterNodeDetails();
 
         GraphDesigner graphDesigner = new GraphDesigner();
         graphDesigner.designGraph();
