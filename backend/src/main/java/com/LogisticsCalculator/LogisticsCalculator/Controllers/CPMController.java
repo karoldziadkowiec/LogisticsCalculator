@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cpm")
 public class CPMController {
-    private final TaskRepository _taskRepository;
+    /*private final TaskRepository _taskRepository;
     @Autowired
     public CPMController(TaskRepository taskRepository) {
         _taskRepository = taskRepository;
@@ -25,5 +25,5 @@ public class CPMController {
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable int id) {
         return _taskRepository.getById(id);
-    }
+    }*/
 }

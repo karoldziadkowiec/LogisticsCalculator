@@ -1,4 +1,15 @@
 .CPM {
     text-align: center;
     padding-top: 20px;
+    padding-bottom: 150px;
+}
+
+.CPM h3 {
+    color: rgb(210, 29, 29);
+}
+
+.activity-table {
+    padding-top: 20px;
+    padding-left: 150px;
+    padding-right: 150px;
 }

@@ -1,0 +1,24 @@
+.CPMTable {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 150px;
+}
+
+.CPMTable h3 {
+    color: rgb(210, 29, 29);
+    padding-bottom: 20px;
+}
+
+.container {
+    display: flex;
+}
+
+.left-container {
+    flex: 1;
+    background-color: rgb(216, 216, 216);
+}
+
+.right-container {
+    flex: 1;
+    background-color: rgb(238, 111, 111);
+}
