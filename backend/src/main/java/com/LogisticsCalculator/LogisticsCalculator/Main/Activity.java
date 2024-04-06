@@ -13,6 +13,7 @@ public class Activity
     int lateStart;
     int lateFinish;
     int slackTime;
+    String isCriticalActivity;
     boolean isChecked;
 
     List<Activity> childList;
@@ -28,6 +29,7 @@ public class Activity
         this.lateStart = 0;
         this.lateFinish = 0;
         this.slackTime = 0;
+        this.isCriticalActivity = "No";
         childList = new ArrayList<Activity>();
         parentList = new ArrayList<Activity>();
 
@@ -54,12 +56,20 @@ public class Activity
         return activity;
     }
 
+    public static void identifyCriticalActivities()
+    {
+        for (Activity activity : activitiesContainer) {
+            if(activity.slackTime == 0)
+                activity.isCriticalActivity = "Yes";
+        }
+    }
+
     public static void printTable()
     {
-        System.out.printf("|%15s |%15s |%15s |%15s |%15s |%15s |%15s |%15s|\n", "ID", "Activity Name", "Duration", "Early Start", "Early Finish", "Late Start", "Late Finish", "Slack Time");
+        System.out.printf("|%15s |%15s |%15s |%15s |%15s |%15s |%15s |%15s |%15s|\n", "ID", "Activity Name", "Duration", "Early Start", "Early Finish", "Late Start", "Late Finish", "Slack Time", "Critical activity");
 
         for (Activity activity : activitiesContainer) {
-            System.out.printf("|%15s |%15s |%15s |%15d |%15d |%15d |%15d |%15d|\n", activity.id, activity.name, activity.duration, activity.earlyStart, activity.earlyFinish, activity.lateStart, activity.lateFinish, activity.slackTime);
+            System.out.printf("|%15s |%15s |%15s |%15d |%15d |%15d |%15d |%15d |%15s|\n", activity.id, activity.name, activity.duration, activity.earlyStart, activity.earlyFinish, activity.lateStart, activity.lateFinish, activity.slackTime, activity.isCriticalActivity);
         }
     }
 

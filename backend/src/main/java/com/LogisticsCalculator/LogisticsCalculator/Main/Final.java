@@ -19,6 +19,7 @@ public class Final extends Throwable
 
         _final.moveForward(graphDesigner);
         _final.moveBack(graphDesigner);
+        Activity.identifyCriticalActivities();
         Activity.printTable();
         _final.createCritialPath(graphDesigner);
     }
