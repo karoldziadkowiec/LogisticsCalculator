@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import NumberOfActivitiesModal from './NumberOfActivitiesModal';
 import '../../App.css';
 import '../../styles/CPM.css';
 
@@ -82,18 +82,12 @@ const CPM = () => {
         <div className="CPM">
             <h1>CPM issue</h1>
             <h3>Enter activity information below</h3>
-            <Modal show={showModal} onHide={handleSaveModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Number of Activities</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p className="text-center">Please enter the number of activities:</p>
-                    <input className="form-control text-center" type="number" value={numberOfActivities} onChange={handleNumberOfActivitiesChange} />
-                </Modal.Body>
-                <Modal.Footer className="justify-content-center">
-                    <Button variant="danger" onClick={handleSaveModal}>Save</Button>
-                </Modal.Footer>
-            </Modal>
+            <NumberOfActivitiesModal
+                showModal={showModal}
+                handleSaveModal={handleSaveModal}
+                handleNumberOfActivitiesChange={handleNumberOfActivitiesChange}
+                numberOfActivities={numberOfActivities}
+            />
             <div className="activity-table">
                 <table className="table">
                     <thead>

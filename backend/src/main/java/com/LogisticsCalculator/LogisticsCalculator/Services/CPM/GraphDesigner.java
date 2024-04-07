@@ -40,19 +40,14 @@ public class GraphDesigner {
     public void moveForward() {
         Queue<Activity> queue = new LinkedList<>();
 
-        System.out.println("in forward");
         for (Activity activity : root) {
             queue.add(activity);
         }
 
-        System.out.println("in forward");
         try {
-            System.out.println("in forward");
-            System.out.println(root.size());
             if (root.size() == 0)
                 throw new RuntimeException("This system has no independent nodes.");
         } catch (RuntimeException exp) {
-            System.out.println(exp.getMessage());
             System.exit(1);
         }
 
@@ -81,7 +76,6 @@ public class GraphDesigner {
                 throw new RuntimeException("There is a circular dependency in the system.");
             }
         } catch (RuntimeException exp) {
-            System.out.println(exp.getMessage());
             System.exit(1);
         }
     }
@@ -141,7 +135,6 @@ public class GraphDesigner {
                 if (temp > lateStart)
                     temp = lateStart;
             }
-            System.out.println(projectDeadLine + "  " + temp);
             activity.lateFinish = temp;
             activity.lateStart = temp - activity.duration;
             activity.slackTime = activity.lateStart - activity.earlyStart;
