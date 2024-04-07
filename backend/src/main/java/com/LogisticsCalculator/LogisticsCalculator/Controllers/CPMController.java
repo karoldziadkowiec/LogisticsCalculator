@@ -23,13 +23,16 @@ public class CPMController {
     @PostMapping
     public List<ActivityRequest> solveCPMIssue(@RequestBody List<Activity> activities) {
         List<Activity> activitiesContainer = _cpmService.solveCPM(activities);
-        List<ActivityRequest> activityRequest = _cpmService.initializeValues(activitiesContainer);
-        return activityRequest;
+        return _cpmService.initializeValues(activitiesContainer);
     }
 
     @PostMapping("critical-path")
     public List<String> provideCriticalPath(@RequestBody List<ActivityRequest> activities) {
-        List<String> activityNames = _cpmService.provideCriticalPath(activities);
-        return activityNames;
+        return _cpmService.provideCriticalPath(activities);
+    }
+
+    @PostMapping("critical-path/duration")
+    public int calculateCriticalPathDuration(@RequestBody List<ActivityRequest> activities) {
+        return _cpmService.calculateCriticalPathDuration(activities);
     }
 }

@@ -57,4 +57,16 @@ public class CPMService {
 
         return activityNames;
     }
+
+    public int calculateCriticalPathDuration(List<ActivityRequest> activities){
+        int duration = 0;
+
+        for(ActivityRequest activity : activities)
+        {
+            if (activity.isCriticalActivity.equals("Yes"))
+                duration += activity.duration;
+        }
+
+        return duration;
+    }
 }
