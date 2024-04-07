@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,11 +6,11 @@ import '../../App.css';
 import '../../styles/CPM.css';
 
 const CPM = () => {
-    const navigate = useNavigate();
     const [numberOfActivities, setNumberOfActivities] = useState(1);
     const [showModal, setShowModal] = useState(true);
     const [dependencyValues, setDependencyValues] = useState<string[]>(Array(numberOfActivities).fill(''));
     const [durations, setDurations] = useState<string[]>(Array(numberOfActivities).fill(''));
+    const [showCalculatedActivities, setShowCalculatedActivities] = useState(false);
 
     const handleSaveModal = () => {
         setShowModal(false);
@@ -42,12 +41,8 @@ const CPM = () => {
         setDependencyValues(newDependencies);
     };
 
-    const handleGenerateTable = () => {
-        moveToCPMTablePage();
-    }
-
-    const moveToCPMTablePage = () => {
-        navigate('/cpm-table');
+    const handleCalculate = () => {
+        setShowCalculatedActivities(true);
     }
 
     const generateTable = () => {
@@ -104,8 +99,8 @@ const CPM = () => {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Activity name</th>
-                            <th>Dependency name (format: -, A, B, C...)</th>
+                            <th>Activity Name</th>
+                            <th>Dependency Name (format: -, A, B, C...)</th>
                             <th>Duration</th>
                         </tr>
                     </thead>
@@ -113,8 +108,31 @@ const CPM = () => {
                         {generateTable()}
                     </tbody>
                 </table>
-                <Button variant="danger" onClick={handleGenerateTable}>Generate Table</Button>
+                <Button variant="danger" onClick={handleCalculate}>Calculate</Button>
             </div>
+            {showCalculatedActivities && (
+                <div className="calculated-activities">
+                    <h3>Calculated activities</h3>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Activity Name</th>
+                                <th>Duration</th>
+                                <th>Early Start</th>
+                                <th>Early Finish</th>
+                                <th>Late Start</th>
+                                <th>Late Finish</th>
+                                <th>Slack Time</th>
+                                <th>Critical Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 }
