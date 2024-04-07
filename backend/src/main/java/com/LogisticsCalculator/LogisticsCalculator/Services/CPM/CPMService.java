@@ -1,8 +1,10 @@
 package com.LogisticsCalculator.LogisticsCalculator.Services.CPM;
 
 import com.LogisticsCalculator.LogisticsCalculator.Models.Activity;
+import com.LogisticsCalculator.LogisticsCalculator.Models.ActivityRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,5 +23,38 @@ public class CPMService {
         Activity.identifyCriticalActivities(activities);
 
         return activities;
+    }
+
+    public List<ActivityRequest> initializeValues(List<Activity> activities){
+        List<ActivityRequest> activityRequest = new ArrayList<ActivityRequest>();
+
+        for (Activity activity : activities) {
+            ActivityRequest request = new ActivityRequest(
+                    activity.id,
+                    activity.name,
+                    activity.duration,
+                    activity.earlyStart,
+                    activity.earlyFinish,
+                    activity.lateStart,
+                    activity.lateFinish,
+                    activity.slackTime,
+                    activity.isCriticalActivity
+            );
+            activityRequest.add(request);
+        }
+
+        return activityRequest;
+    }
+
+    public List<String> provideCriticalPath(List<ActivityRequest> activities){
+        List<String> activityNames = new ArrayList<String>();
+
+        for(ActivityRequest activity : activities)
+        {
+            if (activity.isCriticalActivity.equals("Yes"))
+                activityNames.add(activity.name);
+        }
+
+        return activityNames;
     }
 }

@@ -7,9 +7,8 @@ const Middleman = () => {
     return (
         <div className="Middleman">
             <h1>Middleman issue</h1>
+            <h4>Will be developed soon...</h4>
         </div>
-        
-        
     );
 }
 
