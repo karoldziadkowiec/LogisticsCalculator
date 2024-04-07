@@ -187,6 +187,7 @@ const CPM = () => {
                 </table>
                 <Button variant="danger" onClick={handleCalculate}>Calculate</Button>
             </div>
+
             {showCalculatedActivities && (
                 <div className="calculated-activities">
                     <h3>Calculated activities</h3>
@@ -223,6 +224,7 @@ const CPM = () => {
                     <Button variant="danger" onClick={handleShowCriticalPath}>Show critical path</Button>
                 </div>
             )}
+
             {showCriticalPath && (
                 <div className="critical-path">
                     <h3>Critical Path</h3>
@@ -238,6 +240,7 @@ const CPM = () => {
                     <Button variant="dark" onClick={handleGenerate}>Generate graph</Button>
                 </div>
             )}
+            
             {showActivityGraph && (
                 <div className="activity-graph">
                     <h3>Activity graph</h3>
