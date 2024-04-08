@@ -52,6 +52,26 @@ export const fetchCriticalPath = async (activities: Activity[]): Promise<string[
     }
 };
 
+export const fetchCriticalPathDuration = async (activities: Activity[]): Promise<number> => {
+    try {
+        const response = await fetch(`${ApiURL}/cpm/critical-path/duration`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(activities),
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const criticalPathDuration: number = await response.json();
+        return criticalPathDuration;
+    } catch (error) {
+        console.error('Error:', error);
+        throw new Error('Error occurred while fetching critical path duration.');
+    }
+};
+
 export const processReceivedData = (data: ActivityRequest[]): Activity[] => {
     const convertedData: Activity[] = data.map(activity => ({
         id: activity.id,

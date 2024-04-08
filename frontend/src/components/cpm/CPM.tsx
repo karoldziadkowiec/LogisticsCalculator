@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import NumberOfActivitiesModal from './NumberOfActivitiesModal';
-import { sendAndProcessData, fetchCriticalPath } from '../../services/api/CPMApi';
+import { sendAndProcessData, fetchCriticalPath, fetchCriticalPathDuration } from '../../services/api/CPMApi';
 import { Activity } from '../../models/Activity';
 import '../../App.css';
 import '../../styles/CPM.css';
@@ -19,6 +19,7 @@ const CPM = () => {
     const [showAlert, setShowAlert] = useState<boolean>(false);
     const [showCriticalPath, setShowCriticalPath] = useState<boolean>(false);
     const [criticalPath, setCriticalPath] = useState<string[]>([]);
+    const [criticalPathDuration, setCriticalPathDuration] = useState<number>(0);
     const [showActivityGraph, setShowActivityGraph] = useState<boolean>(false);
 
     const handleSaveModal = () => {
@@ -111,6 +112,16 @@ const CPM = () => {
             const criticalPathNames = await fetchCriticalPath(calculatedActivities);
             setCriticalPath(criticalPathNames);
             setShowCriticalPath(true);
+    
+            // Przeniesienie logiki fetchCriticalPathDuration do setShowCriticalPath
+            try {
+                const duration = await fetchCriticalPathDuration(calculatedActivities);
+                setCriticalPathDuration(duration);
+            } catch (error) {
+                console.error('Error:', error);
+                setAlertMessage('Error occurred while fetching critical path duration.');
+                setShowAlert(true);
+            }
         } catch (error) {
             console.error('Error:', error);
             setAlertMessage('Error occurred while fetching critical path.');
@@ -235,6 +246,11 @@ const CPM = () => {
                                 {index < criticalPath.length - 1 && ' -> '}
                             </span>
                         ))}
+                    </span>
+                    <p></p>
+                    <h3>Duration</h3>
+                    <span className="critical-path-duration-letters">
+                        {criticalPathDuration}
                     </span>
                     <p></p>
                     <Button variant="dark" onClick={handleGenerate}>Generate graph</Button>

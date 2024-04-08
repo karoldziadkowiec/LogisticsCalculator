@@ -23,7 +23,7 @@
 }
 
 .critical-path {
-    background-color: rgb(158, 31, 31);
+    background-color: rgb(179, 38, 38);
     padding-top: 20px;
     padding-left: 150px;
     padding-right: 150px;
@@ -35,7 +35,13 @@
 }
 
 .critical-path-letters {
-    color: rgb(255, 215, 82);
+    color: rgb(255, 236, 96);
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.critical-path-duration-letters {
+    color: rgb(238, 255, 140);
     font-size: 25px;
     font-weight: bold;
 }
