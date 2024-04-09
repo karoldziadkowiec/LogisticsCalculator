@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import NumberOfActivitiesModal from './NumberOfActivitiesModal';
-import { sendAndProcessData, fetchCriticalPath, fetchCriticalPathDuration } from '../../services/api/CPMApi';
+import CPMApi from '../../services/api/CPMApi';
 import { Activity } from '../../models/Activity';
 import '../../App.css';
 import '../../styles/CPM.css';
@@ -104,18 +104,17 @@ const CPM = () => {
             };
             activities.push(activity);
         }
-        sendAndProcessData(activities, setCalculatedActivities, setShowCalculatedActivities, setAlertMessage, setShowAlert);
+        CPMApi.sendAndProcessData(activities, setCalculatedActivities, setShowCalculatedActivities, setAlertMessage, setShowAlert);
     };
 
     const handleShowCriticalPath = async () => {
         try {
-            const criticalPathNames = await fetchCriticalPath(calculatedActivities);
+            const criticalPathNames = await CPMApi.fetchCriticalPath(calculatedActivities);
             setCriticalPath(criticalPathNames);
             setShowCriticalPath(true);
     
-            // Przeniesienie logiki fetchCriticalPathDuration do setShowCriticalPath
             try {
-                const duration = await fetchCriticalPathDuration(calculatedActivities);
+                const duration = await CPMApi.fetchCriticalPathDuration(calculatedActivities);
                 setCriticalPathDuration(duration);
             } catch (error) {
                 console.error('Error:', error);
