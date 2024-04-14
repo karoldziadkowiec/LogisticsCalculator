@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import NumberOfActivitiesModal from './NumberOfActivitiesModal';
 import CPMApi from '../../services/api/CPMApi';
 import { Activity } from '../../models/Activity';
+import NumberOfActivitiesModal from './NumberOfActivitiesModal';
 import '../../App.css';
 import '../../styles/CPM.css';
 
