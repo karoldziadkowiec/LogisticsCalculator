@@ -51,4 +51,20 @@
     padding-left: 150px;
     padding-right: 150px;
     padding-bottom: 120px;
+    border-bottom: 3px solid black;
+}
+
+.gantt-chart {
+    padding-top: 20px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-bottom: 120px;
+}
+
+.gantt-chart h3 {
+    color: black;
+}
+
+.gantt-chart h5 {
+    color: red;
 }

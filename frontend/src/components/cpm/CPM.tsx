@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import CPMApi from '../../services/api/CPMApi';
 import { Activity } from '../../models/Activity';
 import NumberOfActivitiesModal from './NumberOfActivitiesModal';
+import { Gantt, Task } from 'gantt-task-react';
+import "gantt-task-react/dist/index.css";
 import '../../App.css';
 import '../../styles/CPM.css';
 
-const CPM = () => {
-    const [numberOfActivities, setNumberOfActivities] = useState(1);
-    const [showModal, setShowModal] = useState(true);
+const CPM: React.FC = () => {
+    const [numberOfActivities, setNumberOfActivities] = useState<number>(1);
+    const [showModal, setShowModal] = useState<boolean>(true);
     const [dependencyValues, setDependencyValues] = useState<string[]>(Array(numberOfActivities).fill(''));
     const [durations, setDurations] = useState<number[]>(Array(numberOfActivities).fill(0));
-    const [showCalculatedActivities, setShowCalculatedActivities] = useState(false);
+    const [showCalculatedActivities, setShowCalculatedActivities] = useState<boolean>(false);
     const [calculatedActivities, setCalculatedActivities] = useState<Activity[]>([]);
     const [alertMessage, setAlertMessage] = useState<string>('');
     const [showAlert, setShowAlert] = useState<boolean>(false);
@@ -21,6 +23,8 @@ const CPM = () => {
     const [criticalPath, setCriticalPath] = useState<string[]>([]);
     const [criticalPathDuration, setCriticalPathDuration] = useState<number>(0);
     const [showActivityGraph, setShowActivityGraph] = useState<boolean>(false);
+    const [showGanttChart, setShowGanttChart] = useState<boolean>(false);
+    const [tasks, setTasks] = useState<Task[]>([]);
 
     const handleSaveModal = () => {
         setShowModal(false);
@@ -128,10 +132,6 @@ const CPM = () => {
         }
     };
 
-    const handleGenerate = () => {
-        setShowActivityGraph(true);
-    };
-
     const generateTable = () => {
         const rows = [];
         for (let i = 0; i < numberOfActivities; i++) {
@@ -167,6 +167,50 @@ const CPM = () => {
         }
         return rows;
     };
+
+    const generateGraph = useCallback(() => {
+        
+    }, []);
+
+    const generateGanttChart = useCallback(() => {
+        const newTasks: Task[] = calculatedActivities.map((activity) => {
+            const progressColor = activity.isCriticalActivity === 'Yes' ? '#ff0000' : '#000000';
+            const progressSelectedColor = activity.isCriticalActivity === 'Yes' ? '#ff0000' : '#000000';
+            
+            return {
+                ...activity,
+                start: new Date(2024, 0, activity.earlyStart + 1),
+                end: new Date(2024, 0, activity.earlyFinish + 1),
+                name: activity.name.toString(),
+                id: activity.id.toString(),
+                dependencies: activity.dependencyNames,
+                type: 'task',
+                progress: 100,
+                isDisabled: true,
+                styles: { progressColor, progressSelectedColor },
+            };
+        });
+        setTasks(newTasks);
+    }, [calculatedActivities]);
+
+    const handleGenerateGraph = useCallback(() => {
+        setShowActivityGraph(true);
+        generateGraph();
+    }, [generateGraph]);
+
+    const handleGenerateGanttChart = useCallback(() => {
+        setShowGanttChart(true);
+        generateGanttChart();
+    }, [generateGanttChart]);
+
+    useEffect(() => {
+        if (showActivityGraph) {
+            generateGraph();
+        }
+        if (showGanttChart) {
+            generateGanttChart();
+        }
+    }, [showActivityGraph, showGanttChart, generateGraph, generateGanttChart]);
 
     return (
         <div className="CPM">
@@ -231,7 +275,7 @@ const CPM = () => {
                             ))}
                         </tbody>
                     </table>
-                    <Button variant="danger" onClick={handleShowCriticalPath}>Show critical path</Button>
+                    <Button variant="danger" onClick={handleShowCriticalPath}>Show Critical Path</Button>
                 </div>
             )}
 
@@ -252,13 +296,23 @@ const CPM = () => {
                         {criticalPathDuration}
                     </span>
                     <p></p>
-                    <Button variant="dark" onClick={handleGenerate}>Generate graph</Button>
+                    <Button variant="dark" onClick={handleGenerateGraph}>Generate Graph</Button>
                 </div>
             )}
             
-            {showActivityGraph && (
+            {showActivityGraph&& (
                 <div className="activity-graph">
-                    <h3>Activity graph</h3>
+                <h3>Activity Graph</h3>
+                
+                <Button variant="dark" onClick={handleGenerateGanttChart}>Generate Gantt Chart</Button>
+            </div>
+            )}
+
+            {showGanttChart && (
+                <div className="gantt-chart">
+                    <h3>Gantt Chart</h3>
+                    <h5>Critical path highlighted in <b>red</b> color</h5>
+                    <Gantt tasks={tasks} />
                 </div>
             )}
         </div>
