@@ -116,7 +116,7 @@ const CPM: React.FC = () => {
             const criticalPathNames = await CPMApi.fetchCriticalPath(calculatedActivities);
             setCriticalPath(criticalPathNames);
             setShowCriticalPath(true);
-    
+
             try {
                 const duration = await CPMApi.fetchCriticalPathDuration(calculatedActivities);
                 setCriticalPathDuration(duration);
@@ -169,25 +169,25 @@ const CPM: React.FC = () => {
     };
 
     const generateGraph = useCallback(() => {
-        
+
     }, []);
 
     const generateGanttChart = useCallback(() => {
         const newTasks: Task[] = calculatedActivities.map(activity => {
             const progressColor = activity.isCriticalActivity === 'Yes' ? '#bf0000' : '#000000';
             const progressSelectedColor = progressColor;
-        
+
             const dependencyIds: string[] = [];
-        
+
             activity.dependencyNames.forEach(dependencyName => {
                 const dependencyActivity = calculatedActivities.find(a => a.name === dependencyName && a.id !== activity.id);
                 if (dependencyActivity) {
                     dependencyIds.push(dependencyActivity.id.toString());
                 }
             });
-        
+
             const dependencies = dependencyIds.length > 0 ? [...dependencyIds, activity.id.toString()] : [];
-        
+
             return {
                 ...activity,
                 start: new Date(2024, 0, activity.earlyStart + 1),
@@ -203,7 +203,7 @@ const CPM: React.FC = () => {
         });
         setTasks(newTasks);
     }, [calculatedActivities]);
-    
+
     const handleGenerateGraph = useCallback(() => {
         setShowActivityGraph(true);
         generateGraph();
@@ -310,19 +310,19 @@ const CPM: React.FC = () => {
                     <Button variant="dark" onClick={handleGenerateGraph}>Generate Graph</Button>
                 </div>
             )}
-            
-            {showActivityGraph&& (
+
+            {showActivityGraph && (
                 <div className="activity-graph">
-                <h3>Activity Graph</h3>
-                
-                <Button variant="dark" onClick={handleGenerateGanttChart}>Generate Gantt Chart</Button>
-            </div>
+                    <h3>Activity Graph</h3>
+
+                    <Button variant="dark" onClick={handleGenerateGanttChart}>Generate Gantt Chart</Button>
+                </div>
             )}
 
             {showGanttChart && (
                 <div className="gantt-chart">
                     <h3>Gantt Chart</h3>
-                    <h5>Critical path highlighted in <b>red</b> color</h5>
+                    <h5>Critical path highlighted in <b>RED</b> color</h5>
                     <Gantt tasks={tasks} />
                 </div>
             )}
