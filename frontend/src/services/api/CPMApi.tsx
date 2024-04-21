@@ -86,7 +86,7 @@ const CPMApi = {
             isCriticalActivity: activity.isCriticalActivity,
             childList: [],
             parentList: [],
-            dependencyNames: [],
+            dependencyNames: activity.dependencyNames,
         }));
         return convertedData;
     }

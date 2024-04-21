@@ -8,4 +8,5 @@ export interface ActivityRequest {
     lateFinish: number
     slackTime: number
     isCriticalActivity: string
+    dependencyNames: string[]
 }

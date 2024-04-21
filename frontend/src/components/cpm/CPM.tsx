@@ -173,17 +173,28 @@ const CPM: React.FC = () => {
     }, []);
 
     const generateGanttChart = useCallback(() => {
-        const newTasks: Task[] = calculatedActivities.map((activity) => {
-            const progressColor = activity.isCriticalActivity === 'Yes' ? '#ff0000' : '#000000';
-            const progressSelectedColor = activity.isCriticalActivity === 'Yes' ? '#ff0000' : '#000000';
-            
+        const newTasks: Task[] = calculatedActivities.map(activity => {
+            const progressColor = activity.isCriticalActivity === 'Yes' ? '#bf0000' : '#000000';
+            const progressSelectedColor = progressColor;
+        
+            const dependencyIds: string[] = [];
+        
+            activity.dependencyNames.forEach(dependencyName => {
+                const dependencyActivity = calculatedActivities.find(a => a.name === dependencyName && a.id !== activity.id);
+                if (dependencyActivity) {
+                    dependencyIds.push(dependencyActivity.id.toString());
+                }
+            });
+        
+            const dependencies = dependencyIds.length > 0 ? [...dependencyIds, activity.id.toString()] : [];
+        
             return {
                 ...activity,
                 start: new Date(2024, 0, activity.earlyStart + 1),
                 end: new Date(2024, 0, activity.earlyFinish + 1),
                 name: activity.name.toString(),
                 id: activity.id.toString(),
-                dependencies: activity.dependencyNames,
+                dependencies: dependencies,
                 type: 'task',
                 progress: 100,
                 isDisabled: true,
@@ -192,7 +203,7 @@ const CPM: React.FC = () => {
         });
         setTasks(newTasks);
     }, [calculatedActivities]);
-
+    
     const handleGenerateGraph = useCallback(() => {
         setShowActivityGraph(true);
         generateGraph();
