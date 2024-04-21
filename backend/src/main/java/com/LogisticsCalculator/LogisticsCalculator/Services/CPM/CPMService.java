@@ -38,7 +38,8 @@ public class CPMService {
                     activity.lateStart,
                     activity.lateFinish,
                     activity.slackTime,
-                    activity.isCriticalActivity
+                    activity.isCriticalActivity,
+                    activity.dependencyNames
             );
             activityRequest.add(request);
         }

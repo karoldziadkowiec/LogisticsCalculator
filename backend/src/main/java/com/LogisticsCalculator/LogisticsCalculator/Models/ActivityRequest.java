@@ -12,8 +12,9 @@ public class ActivityRequest {
     public int lateFinish;
     public int slackTime;
     public String isCriticalActivity;
+    public List<String> dependencyNames;
     public ActivityRequest(int id, String name, int duration, int earlyStart, int earlyFinish,
-                           int lateStart, int lateFinish, int slackTime, String isCriticalActivity) {
+                           int lateStart, int lateFinish, int slackTime, String isCriticalActivity, List<String> dependencyNames) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -23,5 +24,6 @@ public class ActivityRequest {
         this.lateFinish = lateFinish;
         this.slackTime = slackTime;
         this.isCriticalActivity = isCriticalActivity;
+        this.dependencyNames = dependencyNames;
     }
 }
