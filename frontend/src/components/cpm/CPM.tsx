@@ -174,11 +174,10 @@ const CPM: React.FC = () => {
     
       
     const generateGraph = useCallback(() => {
-
-        
         const nodes: Node[] = calculatedActivities.map((activity, index) => {
-          const isCritical = activity.isCriticalActivity === 'Yes';
-          const labelStyle = { fontSize: '16px' }; // Styl dla całej etykiety
+
+        const isCritical = activity.isCriticalActivity === 'Yes';
+        const labelStyle = { fontSize: '16px' }; // Styl dla całej etykiety
         const nameStyle = { fontSize: '20px', fontWeight: 'bold' }; 
 
         const x = (index + 1) * 200; // Odstęp między węzłami w poziomie
@@ -197,7 +196,7 @@ const CPM: React.FC = () => {
                 ) },
             position: { x, y },
             style: {
-              backgroundColor: isCritical ? '#bf0000' : '#000000'
+                backgroundColor: isCritical ? '#FF8080' : '#CCCCCC'
             }
           };
         });
