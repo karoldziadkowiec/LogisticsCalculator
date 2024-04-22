@@ -7,10 +7,9 @@ import { Activity } from '../../models/Activity';
 import NumberOfActivitiesModal from './NumberOfActivitiesModal';
 import { Gantt, Task } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
+import ReactFlow, { Node, Edge } from 'react-flow-renderer';
 import '../../App.css';
 import '../../styles/CPM.css';
-import ReactFlow, { Node, Edge } from 'react-flow-renderer';
-import { title } from 'process';
 
 const CPM: React.FC = () => {
     const [numberOfActivities, setNumberOfActivities] = useState<number>(1);
@@ -171,57 +170,56 @@ const CPM: React.FC = () => {
         return rows;
     };
 
-    
-      
     const generateGraph = useCallback(() => {
         const nodes: Node[] = calculatedActivities.map((activity, index) => {
 
-        const isCritical = activity.isCriticalActivity === 'Yes';
-        const labelStyle = { fontSize: '16px' }; // Styl dla całej etykiety
-        const nameStyle = { fontSize: '20px', fontWeight: 'bold' }; 
+            const isCritical = activity.isCriticalActivity === 'Yes';
+            const labelStyle = { fontSize: '16px' }; // Styl dla całej etykiety
+            const nameStyle = { fontSize: '20px', fontWeight: 'bold' };
 
-        const x = (index + 1) * 200; // Odstęp między węzłami w poziomie
-        const y = Math.random() * 500;
-          return {
-            id: activity.id.toString(),
-            data: {  
-                label: (
-                    <div style={labelStyle}>
-                        <div style={nameStyle}>{activity.name}</div>
-                        Duration: {activity.duration}<br />
-                        Early Start: {activity.earlyStart}<br />
-                        Early Finish: {activity.earlyFinish}<br />
-                        Slack Time: {activity.slackTime}
-                    </div>
-                ) },
-            position: { x, y },
-            style: {
-                backgroundColor: isCritical ? '#FF8080' : '#CCCCCC'
-            }
-          };
+            const x = (index + 1) * 200; // Odstęp między węzłami w poziomie
+            const y = Math.random() * 500;
+            return {
+                id: activity.id.toString(),
+                data: {
+                    label: (
+                        <div style={labelStyle}>
+                            <div style={nameStyle}>{activity.name}</div>
+                            Duration: {activity.duration}<br />
+                            Early Start: {activity.earlyStart}<br />
+                            Early Finish: {activity.earlyFinish}<br />
+                            Slack Time: {activity.slackTime}
+                        </div>
+                    )
+                },
+                position: { x, y },
+                style: {
+                    backgroundColor: isCritical ? '#FF8080' : '#CCCCCC'
+                }
+            };
         });
-      
+
         const edges: Edge[] = [];
         calculatedActivities.forEach(activity => {
-          activity.dependencyNames.forEach(dependencyName => {
-            const dependencyActivity = calculatedActivities.find(a => a.name === dependencyName);
-            if (dependencyActivity) {
-              edges.push({
-                id: `${dependencyActivity.id}-${activity.id}`,
-                source: dependencyActivity.id.toString(),
-                target: activity.id.toString(),
-                label: activity.duration.toString()
-              });
-            }
-          });
+            activity.dependencyNames.forEach(dependencyName => {
+                const dependencyActivity = calculatedActivities.find(a => a.name === dependencyName);
+                if (dependencyActivity) {
+                    edges.push({
+                        id: `${dependencyActivity.id}-${activity.id}`,
+                        source: dependencyActivity.id.toString(),
+                        target: activity.id.toString(),
+                        label: activity.duration.toString()
+                    });
+                }
+            });
         });
-      
+
         setGraphElements({ nodes: nodes, edges: edges });
         return { nodes, edges };
-      }, [calculatedActivities]);
+    }, [calculatedActivities]);
 
-    
-      const handleNodeDrag = (event: React.MouseEvent<Element>, node: Node) => {
+
+    const handleNodeDrag = (event: React.MouseEvent<Element>, node: Node) => {
         if (node.type === 'default') {
             const updatedNodes = graphElements.nodes.map((n: Node) => {
                 if (n.id === node.id) {
@@ -241,8 +239,6 @@ const CPM: React.FC = () => {
             setGraphElements({ ...graphElements, nodes: updatedNodes }); // Aktualizacja stanu węzłów
         }
     };
-
-      
 
     const generateGanttChart = useCallback(() => {
         const newTasks: Task[] = calculatedActivities.map(activity => {
@@ -387,10 +383,8 @@ const CPM: React.FC = () => {
                 <div className="activity-graph">
                     <h3>Activity Graph</h3>
                     <div style={{ width: '100%', height: '600px' }}>
-                    <ReactFlow onNodeDragStart={handleNodeDrag} {...graphElements} style={{ width: '130%', height: '700px' }} />
-
-          </div>
-                
+                        <ReactFlow onNodeDragStart={handleNodeDrag} {...graphElements} style={{ width: '130%', height: '600px' }} />
+                    </div>
                     <Button variant="dark" onClick={handleGenerateGanttChart}>Generate Gantt Chart</Button>
                 </div>
             )}
