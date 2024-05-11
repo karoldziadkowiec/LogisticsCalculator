@@ -1,7 +1,7 @@
 package com.LogisticsCalculator.LogisticsCalculator.Services.CPM;
 
-import com.LogisticsCalculator.LogisticsCalculator.Models.Activity;
-import com.LogisticsCalculator.LogisticsCalculator.Models.ActivityRequest;
+import com.LogisticsCalculator.LogisticsCalculator.Models.CPM.Activity;
+import com.LogisticsCalculator.LogisticsCalculator.Models.CPM.ActivityRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
