@@ -1,5 +1,5 @@
-import { Activity } from '../../models/Activity';
-import { ActivityRequest } from '../../models/ActivityRequest';
+import { Activity } from '../../models/cpm/Activity';
+import { ActivityRequest } from '../../models/cpm/ActivityRequest';
 import { Dispatch, SetStateAction } from 'react';
 import ApiURL from '../../constants/ApiConfig';
 

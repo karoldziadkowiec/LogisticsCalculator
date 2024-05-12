@@ -1,5 +1,5 @@
 package com.LogisticsCalculator.LogisticsCalculator.Main;
-import com.LogisticsCalculator.LogisticsCalculator.Models.Activity;
+import com.LogisticsCalculator.LogisticsCalculator.Models.CPM.Activity;
 import com.LogisticsCalculator.LogisticsCalculator.Services.CPM.GraphDesigner;
 import com.LogisticsCalculator.LogisticsCalculator.Services.CPM.InputHandler;
 

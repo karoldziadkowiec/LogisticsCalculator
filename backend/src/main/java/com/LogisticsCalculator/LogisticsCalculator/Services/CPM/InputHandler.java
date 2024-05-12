@@ -1,5 +1,5 @@
 package com.LogisticsCalculator.LogisticsCalculator.Services.CPM;
-import com.LogisticsCalculator.LogisticsCalculator.Models.Activity;
+import com.LogisticsCalculator.LogisticsCalculator.Models.CPM.Activity;
 
 import java.util.*;
 

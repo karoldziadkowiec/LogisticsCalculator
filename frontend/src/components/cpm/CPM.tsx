@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import CPMApi from '../../services/api/CPMApi';
-import { Activity } from '../../models/Activity';
+import { Activity } from '../../models/cpm/Activity';
 import NumberOfActivitiesModal from './NumberOfActivitiesModal';
 import { Gantt, Task } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";

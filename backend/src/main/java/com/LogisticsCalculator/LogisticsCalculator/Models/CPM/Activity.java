@@ -1,4 +1,4 @@
-package com.LogisticsCalculator.LogisticsCalculator.Models;
+package com.LogisticsCalculator.LogisticsCalculator.Models.CPM;
 import java.util.ArrayList;
 import java.util.*;
 
