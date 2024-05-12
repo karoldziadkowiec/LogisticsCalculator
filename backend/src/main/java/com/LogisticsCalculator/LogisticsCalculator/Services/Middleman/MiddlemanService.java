@@ -21,7 +21,7 @@ public class MiddlemanService {
         int[][] unitProfitMatrix = extendMatrixWithZeros(profitMatrix);
         removeLastColumn(unitProfitMatrix);
         displayMatrix(unitProfitMatrix);
-        int[][] optimalTransportMatrix = calculateOptimalTransport(details.suppliersSupply, details.consumersDemand, profitMatrix);
+        int[][] optimalTransportMatrix = calculateOptimalTransport(details.suppliersSupply, details.customersDemand, profitMatrix);
         optimalTransportMatrix = removeLastRowAndColumn(optimalTransportMatrix);
         displayMatrix(optimalTransportMatrix);
 
@@ -30,20 +30,20 @@ public class MiddlemanService {
     }
 
     private int[][] calculateProfitMatrix(MiddlemanDetails details) {
-        int[][] profitMatrix = new int[details.numSuppliers][details.numConsumers];
+        int[][] profitMatrix = new int[details.numSuppliers][details.numCustomers];
         for (int i = 0; i < details.numSuppliers; i++) {
-            for (int j = 0; j < details.numConsumers; j++) {
-                profitMatrix[i][j] = details.consumersPurchase.get(j) - details.suppliersProductCost.get(i) - details.transportationCosts[i][j];
+            for (int j = 0; j < details.numCustomers; j++) {
+                profitMatrix[i][j] = details.customersSellingPrice.get(j) - details.suppliersPurchasePrice.get(i) - details.transportationCosts[i][j];
             }
         }
         return profitMatrix;
     }
 
     private void adjustDetailsWithSum(MiddlemanDetails details) {
-        int sum1 = details.consumersDemand.stream().mapToInt(Integer::intValue).sum();
+        int sum1 = details.customersDemand.stream().mapToInt(Integer::intValue).sum();
         int sum2 = details.suppliersSupply.stream().mapToInt(Integer::intValue).sum();
         details.suppliersSupply.add(sum1);
-        details.consumersDemand.add(sum2);
+        details.customersDemand.add(sum2);
     }
 
     private int[][] extendMatrixWithZeros(int[][] profitMatrix) {
@@ -128,8 +128,8 @@ public class MiddlemanService {
         for (int i = 0; i < details.transportationCosts.length; i++) {
             for (int j = 0; j < details.transportationCosts[0].length; j++) {
                 resultTransport += details.transportationCosts[i][j] * optimalTransportMatrix[i][j];
-                resultPurchaseCost += optimalTransportMatrix[i][j] * details.suppliersProductCost.get(i);
-                resultSalesIncome += optimalTransportMatrix[i][j] * details.consumersPurchase.get(j);
+                resultPurchaseCost += optimalTransportMatrix[i][j] * details.suppliersPurchasePrice.get(i);
+                resultSalesIncome += optimalTransportMatrix[i][j] * details.customersSellingPrice.get(j);
             }
         }
         return new int[]{resultTransport, resultPurchaseCost, resultSalesIncome};

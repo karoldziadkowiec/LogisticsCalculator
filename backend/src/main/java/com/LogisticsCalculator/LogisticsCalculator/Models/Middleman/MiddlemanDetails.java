@@ -7,30 +7,30 @@ import java.util.List;
 @Component
 public class MiddlemanDetails {
     public int numSuppliers;
-    public int numConsumers;
+    public int numCustomers;
     public List<Integer> suppliersSupply;
-    public List<Integer> suppliersProductCost;
-    public List<Integer> consumersDemand;
-    public List<Integer> consumersPurchase;
+    public List<Integer> suppliersPurchasePrice;
+    public List<Integer> customersDemand;
+    public List<Integer> customersSellingPrice;
     public int[][] transportationCosts;
 
     public MiddlemanDetails() {
     }
-    public MiddlemanDetails(int numSuppliers, int numConsumers, List<Integer> suppliersSupply, List<Integer> suppliersProductCost, List<Integer> consumersDemand, List<Integer> consumersPurchase) {
+    public MiddlemanDetails(int numSuppliers, int numCustomers, List<Integer> suppliersSupply, List<Integer> suppliersPurchasePrice, List<Integer> customersDemand, List<Integer> customersSellingPrice) {
         this.numSuppliers = numSuppliers;
-        this.numConsumers = numConsumers;
+        this.numCustomers = numCustomers;
         this.suppliersSupply = suppliersSupply;
-        this.suppliersProductCost = suppliersProductCost;
-        this.consumersDemand = consumersDemand;
-        this.consumersPurchase = consumersPurchase;
+        this.suppliersPurchasePrice = suppliersPurchasePrice;
+        this.customersDemand = customersDemand;
+        this.customersSellingPrice = customersSellingPrice;
     }
 
     public void setNumSuppliers(int numSuppliers) {
         this.numSuppliers = numSuppliers;
     }
 
-    public void setNumConsumers(int numConsumers) {
-        this.numConsumers = numConsumers;
+    public void setNumCustomers(int numCustomers) {
+        this.numCustomers = numCustomers;
     }
 
     public void setTransportationCosts(int[][] transportationCosts) {
