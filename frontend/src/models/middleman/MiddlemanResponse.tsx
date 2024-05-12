@@ -4,6 +4,6 @@ export interface MiddlemanResponse {
     resultTransport: number
     resultPurchaseCost: number
     totalCost: number
-    resultSalesIncome: number
+    income: number
     profit: number
 }

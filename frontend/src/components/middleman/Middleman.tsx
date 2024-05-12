@@ -7,7 +7,7 @@ import '../../styles/Middleman.css';
 const Middleman = () => {
     const [showModal, setShowModal] = useState(false);
     const [numSuppliers, setNumSuppliers] = useState(2);
-    const [numConsumers, setNumConsumers] = useState(2);
+    const [numCustomers, setNumCustomers] = useState(2);
     const [showCalculatedDetails, setShowCalculatedDetails] = useState(false);
 
     useEffect(() => {
@@ -22,8 +22,8 @@ const Middleman = () => {
         setNumSuppliers(Number(event.target.value));
     }
 
-    const handleNumConsumersChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNumConsumers(Number(event.target.value));
+    const handleNumCustomersChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNumCustomers(Number(event.target.value));
     }
 
     const renderSupplierSupplyFields = () => {
@@ -42,60 +42,60 @@ const Middleman = () => {
         return supplierSupplyFields;
     }
 
-    const renderSupplierProdcutCostFields = () => {
-        const supplierProductCostFields = [];
+    const renderSupplierPurchasePriceFields = () => {
+        const supplierPurchasePriceFields = [];
         for (let i = 0; i < numSuppliers; i++) {
-            supplierProductCostFields.push(
+            supplierPurchasePriceFields.push(
                 <input
-                    key={`supplier-product-cost-${i}`}
+                    key={`supplier-purchase-price-${i}`}
                     type="text"
-                    className="form-control supplier-product-cost-field"
+                    className="form-control supplier-purchase-price-field"
                     style={{ width: '110px', marginRight: '10px' }}
                     placeholder={`Supplier ${i + 1}`}
                 />
             );
         }
-        return supplierProductCostFields;
+        return supplierPurchasePriceFields;
     }
 
-    const renderConsumerDemandFields = () => {
-        const consumerDemandFields = [];
-        for (let i = 0; i < numConsumers; i++) {
-            consumerDemandFields.push(
+    const renderCustomerDemandFields = () => {
+        const customerDemandFields = [];
+        for (let i = 0; i < numCustomers; i++) {
+            customerDemandFields.push(
                 <input
-                    key={`consumer-demand-${i}`}
+                    key={`customer-demand-${i}`}
                     type="text"
-                    className="form-control consumer-demand-field"
+                    className="form-control customer-demand-field"
                     style={{ width: '110px', marginRight: '10px' }}
-                    placeholder={`Consumer ${i + 1}`}
+                    placeholder={`Customer ${i + 1}`}
                 />
             );
         }
-        return consumerDemandFields;
+        return customerDemandFields;
     }
 
-    const renderConsumerPurchaseFields = () => {
-        const ConsumerPurchaseFields = [];
-        for (let i = 0; i < numConsumers; i++) {
-            ConsumerPurchaseFields.push(
+    const renderCustomerSellingPriceFields = () => {
+        const CustomerSellingPriceFields = [];
+        for (let i = 0; i < numCustomers; i++) {
+            CustomerSellingPriceFields.push(
                 <input
-                    key={`consumer-purchase-${i}`}
+                    key={`customer-selling-price-${i}`}
                     type="text"
-                    className="form-control consumer-purchase-field"
+                    className="form-control customer-selling-price-field"
                     style={{ width: '110px', marginRight: '10px' }}
-                    placeholder={`Consumer ${i + 1}`}
+                    placeholder={`Customer ${i + 1}`}
                 />
             );
         }
-        return ConsumerPurchaseFields;
+        return CustomerSellingPriceFields;
     }
 
     const renderTransportationCostsMatrix = () => {
         const TransportationCostsMatrix = [];
-        for (let j = 0; j < numConsumers; j++) {
+        for (let j = 0; j < numCustomers; j++) {
             const column = [];
             for (let i = 0; i < numSuppliers; i++) {
-                let index = (i * numConsumers + j) + 1;
+                let index = (i * numCustomers + j) + 1;
                 column.push(
                     <input
                         key={`cost-${index}`}
@@ -126,13 +126,13 @@ const Middleman = () => {
                 <h3>Enter middleman details below</h3>
                 <Modal show={showModal} onHide={handleSaveModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Number of suppliers and consumers</Modal.Title>
+                        <Modal.Title>Number of suppliers and customers</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <p className="text-center"><b>Suppliers:</b> {numSuppliers}</p>
                         <input type="range" className="form-range" min="2" max="10" step="1" id="customRange3" value={numSuppliers} onChange={handleNumSuppliersChange}></input>
-                        <p className="text-center"><b>Consumers:</b> {numConsumers}</p>
-                        <input type="range" className="form-range" min="2" max="10" step="1" id="customRange3" value={numConsumers} onChange={handleNumConsumersChange}></input>
+                        <p className="text-center"><b>Customers:</b> {numCustomers}</p>
+                        <input type="range" className="form-range" min="2" max="10" step="1" id="customRange3" value={numCustomers} onChange={handleNumCustomersChange}></input>
                     </Modal.Body>
                     <Modal.Footer className="justify-content-center">
                         <Button variant="danger" onClick={handleSaveModal}>Save</Button>
@@ -140,17 +140,17 @@ const Middleman = () => {
                 </Modal>
                 <div className="details-table">
                     <h5>Suppliers: <b>{numSuppliers}</b></h5>
-                    <h5>Consumers: <b>{numConsumers}</b></h5>
+                    <h5>Customers: <b>{numCustomers}</b></h5>
                     <h5 style={{ display: 'flex', alignItems: 'center' }}>Supplier's supply: {renderSupplierSupplyFields()}</h5>
-                    <h5 style={{ display: 'flex', alignItems: 'center' }}>Supplier's product cost: {renderSupplierProdcutCostFields()}</h5>
-                    <h5 style={{ display: 'flex', alignItems: 'center' }}>Consumer's demand: {renderConsumerDemandFields()}</h5>
-                    <h5 style={{ display: 'flex', alignItems: 'center' }}>Consumer's purchase: {renderConsumerPurchaseFields()}</h5>
+                    <h5 style={{ display: 'flex', alignItems: 'center' }}>Supplier's purchase price: {renderSupplierPurchasePriceFields()}</h5>
+                    <h5 style={{ display: 'flex', alignItems: 'center' }}>Customer's demand: {renderCustomerDemandFields()}</h5>
+                    <h5 style={{ display: 'flex', alignItems: 'center' }}>Customer's selling price: {renderCustomerSellingPriceFields()}</h5>
                     <h5 style={{ display: 'flex', alignItems: 'center' }}>Transportation costs: {renderTransportationCostsMatrix()}</h5>
                     <Button variant="danger" onClick={handleCalculate}>Calculate</Button>
                 </div>
                 {showCalculatedDetails && (
                     <div className="calculated-details">
-                        <h3>Calculated Details</h3>
+                        <h3>Calculated details</h3>
                         
                     </div>
                 )}

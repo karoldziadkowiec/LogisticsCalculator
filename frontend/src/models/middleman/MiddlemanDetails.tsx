@@ -1,9 +1,9 @@
 export interface MiddlemanDetails {
     numSuppliers: number
-    numConsumers: number
+    numCustomers: number
     suppliersSupply: number[]
-    suppliersProductCost: number[]
-    consumersDemand: number[]
-    consumersPurchase: number[]
+    suppliersPurchasePrice: number[]
+    customersDemand: number[]
+    customersSellingPrice: number[]
     transportationCosts: number[][]
 }
