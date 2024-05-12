@@ -5,7 +5,7 @@ import '../../App.css';
 import '../../styles/Middleman.css';
 
 const Middleman = () => {
-        const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [numSuppliers, setNumSuppliers] = useState(2);
     const [numConsumers, setNumConsumers] = useState(2);
     const [showCalculatedDetails, setShowCalculatedDetails] = useState(false);
