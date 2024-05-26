@@ -1,4 +1,4 @@
-# LogisticsCalculator [IN DEVELOPMENT PHASE]
+# Logistics Calculator
 ## About project
 The project is a university assignment - web application presenting a logistics calculator for solving Critical Path Method (CPM) and Middleman issues. It provides a user-friendly interface for managing project tasks and optimizing logistics operations.
 
@@ -66,9 +66,19 @@ Gantt chart:
 
 ### Middleman issue
 
-**TBD**
+Entering the number of suppliers and customers:
 
-![10](/github-img/10.png)
+![10](/github-img/10_.png)
+
+
+Entering details for middleman:
+
+![11](/github-img/11.png)
+
+
+Calculated middleman details:
+
+![12](/github-img/12.png)
 
 
 ### Responsive mobile version

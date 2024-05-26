@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import calculateMiddleman from '../../services/api/MiddlemanApi';
+import { MiddlemanResponse } from '../../models/middleman/MiddlemanResponse';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../App.css';
 import '../../styles/Middleman.css';
-
-interface CalculatedDetails {
-    unitProfitMatrix: number[][];
-    optimalTransportMatrix: number[][];
-    resultTransport: number;
-    resultPurchaseCost: number;
-    totalCost: number;
-    income: number;
-    profit: number;
-}
 
 const Middleman: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const [numSuppliers, setNumSuppliers] = useState(2);
     const [numCustomers, setNumCustomers] = useState(2);
     const [showCalculatedDetails, setShowCalculatedDetails] = useState(false);
-    const [calculatedDetails, setCalculatedDetails] = useState<CalculatedDetails | null>(null);
+    const [calculatedDetails, setCalculatedDetails] = useState<MiddlemanResponse | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         setShowModal(true);
@@ -127,7 +120,32 @@ const Middleman: React.FC = () => {
         return TransportationCostsMatrix;
     }
 
+    const validateFields = (): boolean => {
+        const supplierSupplyInputs = Array.from(document.getElementsByClassName('supplier-supply-field')).map(input => (input as HTMLInputElement).value);
+        const supplierPurchasePriceInputs = Array.from(document.getElementsByClassName('supplier-purchase-price-field')).map(input => (input as HTMLInputElement).value);
+        const customerDemandInputs = Array.from(document.getElementsByClassName('customer-demand-field')).map(input => (input as HTMLInputElement).value);
+        const customerSellingPriceInputs = Array.from(document.getElementsByClassName('customer-selling-price-field')).map(input => (input as HTMLInputElement).value);
+        const transportationCostInputs = Array.from(document.getElementsByClassName('cost-field')).map(input => (input as HTMLInputElement).value);
+
+        const allInputs = [...supplierSupplyInputs, ...supplierPurchasePriceInputs, ...customerDemandInputs, ...customerSellingPriceInputs, ...transportationCostInputs];
+
+        for (let input of allInputs) {
+            if (input.trim() === '') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     const handleCalculate = async () => {
+        setError(null);
+
+        if (!validateFields()) {
+            setError('Please fill in all fields.');
+            return;
+        }
+
         const suppliersSupply = Array.from(document.getElementsByClassName('supplier-supply-field')).map(input => Number((input as HTMLInputElement).value));
         const suppliersPurchasePrice = Array.from(document.getElementsByClassName('supplier-purchase-price-field')).map(input => Number((input as HTMLInputElement).value));
         const customersDemand = Array.from(document.getElementsByClassName('customer-demand-field')).map(input => Number((input as HTMLInputElement).value));
@@ -155,24 +173,12 @@ const Middleman: React.FC = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:7070/api/middleman', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (response.ok) {
-                const result: CalculatedDetails = await response.json();
-                setCalculatedDetails(result);
-                setShowCalculatedDetails(true);
-            } else {
-                const errorText = await response.text();
-                console.error('Error:', response.statusText, errorText);
-            }
+            const result = await calculateMiddleman(data);
+            setCalculatedDetails(result);
+            setShowCalculatedDetails(true);
         } catch (error) {
             console.error('Error:', error);
+            setError('An error occurred while calculating. Please try again.');
         }
     }
 
@@ -203,6 +209,7 @@ const Middleman: React.FC = () => {
                     <h5 style={{ display: 'flex', alignItems: 'center' }}>Customer's demand: {renderCustomerDemandFields()}</h5>
                     <h5 style={{ display: 'flex', alignItems: 'center' }}>Customer's selling price: {renderCustomerSellingPriceFields()}</h5>
                     <h5 style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>Transportation costs: {renderTransportationCostsMatrix()}</h5>
+                    {error && <div className="alert alert-danger">{error}</div>}
                     <Button variant="danger" onClick={handleCalculate}>Calculate</Button>
                 </div>
                 {showCalculatedDetails && calculatedDetails && (
@@ -232,9 +239,9 @@ const Middleman: React.FC = () => {
                             ))}
                             </tbody>
                         </table>
-                        <p><b>Result Transport:</b> {calculatedDetails.resultTransport}</p>
-                        <p><b>Result Purchase Cost:</b> {calculatedDetails.resultPurchaseCost}</p>
-                        <p><b>Total Costs:</b> {calculatedDetails.totalCost}</p>
+                        <p><b>Transport costs:</b> {calculatedDetails.resultTransport}</p>
+                        <p><b>Purchase costs:</b> {calculatedDetails.resultPurchaseCost}</p>
+                        <p><b>Total costs:</b> {calculatedDetails.totalCost}</p>
                         <p><b>Income:</b> {calculatedDetails.income}</p>
                         <p><b>Profit:</b> {calculatedDetails.profit}</p>
                     </div>
