@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../App.css';
 import '../../styles/Middleman.css';
 
-const Middleman = () => {
+interface CalculatedDetails {
+    unitProfitMatrix: number[][];
+    optimalTransportMatrix: number[][];
+    resultTransport: number;
+    resultPurchaseCost: number;
+    totalCost: number;
+    income: number;
+    profit: number;
+}
+
+const Middleman: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const [numSuppliers, setNumSuppliers] = useState(2);
     const [numCustomers, setNumCustomers] = useState(2);
     const [showCalculatedDetails, setShowCalculatedDetails] = useState(false);
+    const [calculatedDetails, setCalculatedDetails] = useState<CalculatedDetails | null>(null);
 
     useEffect(() => {
         setShowModal(true);
@@ -92,11 +104,11 @@ const Middleman = () => {
 
     const renderTransportationCostsMatrix = () => {
         const TransportationCostsMatrix = [];
-        for (let j = 0; j < numCustomers; j++) {
-            const column = [];
-            for (let i = 0; i < numSuppliers; i++) {
+        for (let i = 0; i < numSuppliers; i++) {
+            const row = [];
+            for (let j = 0; j < numCustomers; j++) {
                 let index = (i * numCustomers + j) + 1;
-                column.push(
+                row.push(
                     <input
                         key={`cost-${index}`}
                         type="text"
@@ -107,16 +119,61 @@ const Middleman = () => {
                 );
             }
             TransportationCostsMatrix.push(
-                <div key={`column-${j}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    {column}
+                <div key={`row-${i}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px' }}>
+                    {row}
                 </div>
             );
         }
         return TransportationCostsMatrix;
     }
 
-    const handleCalculate = () => {
-        setShowCalculatedDetails(true);
+    const handleCalculate = async () => {
+        const suppliersSupply = Array.from(document.getElementsByClassName('supplier-supply-field')).map(input => Number((input as HTMLInputElement).value));
+        const suppliersPurchasePrice = Array.from(document.getElementsByClassName('supplier-purchase-price-field')).map(input => Number((input as HTMLInputElement).value));
+        const customersDemand = Array.from(document.getElementsByClassName('customer-demand-field')).map(input => Number((input as HTMLInputElement).value));
+        const customersSellingPrice = Array.from(document.getElementsByClassName('customer-selling-price-field')).map(input => Number((input as HTMLInputElement).value));
+        const transportationCosts: number[][] = [];
+
+        for (let i = 0; i < numSuppliers; i++) {
+            const row: number[] = [];
+            for (let j = 0; j < numCustomers; j++) {
+                const index = i * numCustomers + j;
+                const value = (document.getElementsByClassName('cost-field')[index] as HTMLInputElement).value;
+                row.push(Number(value));
+            }
+            transportationCosts.push(row);
+        }
+
+        const data = {
+            numSuppliers,
+            numCustomers,
+            suppliersSupply,
+            suppliersPurchasePrice,
+            customersDemand,
+            customersSellingPrice,
+            transportationCosts
+        };
+
+        try {
+            const response = await fetch('http://localhost:7070/api/middleman', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                const result: CalculatedDetails = await response.json();
+                setCalculatedDetails(result);
+                setShowCalculatedDetails(true);
+            } else {
+                const errorText = await response.text();
+                console.error('Error:', response.statusText, errorText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     return (
@@ -145,13 +202,41 @@ const Middleman = () => {
                     <h5 style={{ display: 'flex', alignItems: 'center' }}>Supplier's purchase price: {renderSupplierPurchasePriceFields()}</h5>
                     <h5 style={{ display: 'flex', alignItems: 'center' }}>Customer's demand: {renderCustomerDemandFields()}</h5>
                     <h5 style={{ display: 'flex', alignItems: 'center' }}>Customer's selling price: {renderCustomerSellingPriceFields()}</h5>
-                    <h5 style={{ display: 'flex', alignItems: 'center' }}>Transportation costs: {renderTransportationCostsMatrix()}</h5>
+                    <h5 style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>Transportation costs: {renderTransportationCostsMatrix()}</h5>
                     <Button variant="danger" onClick={handleCalculate}>Calculate</Button>
                 </div>
-                {showCalculatedDetails && (
+                {showCalculatedDetails && calculatedDetails && (
                     <div className="calculated-details">
                         <h3>Calculated details</h3>
-                        
+                        <h5>Unit Profit Matrix:</h5>
+                        <table className="table table-bordered table-sm">
+                            <tbody>
+                            {calculatedDetails.unitProfitMatrix.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    {row.map((cell, cellIndex) => (
+                                        <td key={cellIndex}>{cell}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                        <h5>Optimal Transport Matrix:</h5>
+                        <table className="table table-bordered table-sm">
+                            <tbody>
+                            {calculatedDetails.optimalTransportMatrix.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    {row.map((cell, cellIndex) => (
+                                        <td key={cellIndex}>{cell}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                        <p><b>Result Transport:</b> {calculatedDetails.resultTransport}</p>
+                        <p><b>Result Purchase Cost:</b> {calculatedDetails.resultPurchaseCost}</p>
+                        <p><b>Total Costs:</b> {calculatedDetails.totalCost}</p>
+                        <p><b>Income:</b> {calculatedDetails.income}</p>
+                        <p><b>Profit:</b> {calculatedDetails.profit}</p>
                     </div>
                 )}
             </div>
