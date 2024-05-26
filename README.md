@@ -68,7 +68,7 @@ Gantt chart:
 
 Entering the number of suppliers and customers:
 
-![10](/github-img/10_.png)
+![10](/github-img/10.png)
 
 
 Entering details for middleman:
